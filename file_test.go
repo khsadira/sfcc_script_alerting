@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestGetHosts(t *testing.T) {
 	hosts := getHosts()
@@ -26,5 +28,32 @@ func TestGetSitesSfcc(t *testing.T) {
 
 	if i != len {
 		t.Errorf("getTarget was incorrect, len was %d, suppose to be %d", len, i)
+	}
+}
+
+func TestCompareInfo(t *testing.T) {
+	compare := []byte(`{"hits":[{"data":{"last_modified":"2019-10-11T13:24:41.345Z"}}]}`)
+	compare2 := []byte(`{"hits":[{"data":{"last_modified":"2019-10-11T13:24:41.34512Z"}}]}`)
+	compare3 := []byte(`{"hits":[{"type": "salut","data":{"last_modified":"2019-10-11T13:24:41.34512Z"}}]}`)
+
+	_, retT1 := compareInfo(compare, compare)
+	_, retT2 := compareInfo(compare2, compare2)
+	_, retT3 := compareInfo(compare2, compare3)
+	_, retF1 := compareInfo(compare, compare2)
+	_, retF2 := compareInfo(compare, nil)
+	if retT1 == false {
+		t.Errorf("getSfccInfo not working well, retT1")
+	}
+	if retF1 == true {
+		t.Errorf("getSfccInfo not working well, retF1")
+	}
+	if retF2 == true {
+		t.Errorf("getSfccInfo not working well, retF2")
+	}
+	if retT2 == false {
+		t.Errorf("getSfccInfo not working well, retT2")
+	}
+	if retT3 == false {
+		t.Errorf("getSfccInfo not working well, retT3")
 	}
 }

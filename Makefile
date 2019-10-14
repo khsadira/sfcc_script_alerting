@@ -1,11 +1,11 @@
-NAME	:=	sfcc_clean
+NAME	:=	sfcc_report
 GO		:=	go
 FMT		=	gofmt
 pkgs	=	$(shell env GO111MODULE=on $(GO) list -m)
 
 FILE	=	main.go
 
-DOCKER_IMAGE_NAME       ?= sfcc_clean
+DOCKER_IMAGE_NAME       ?= sfcc_report
 
 all: format build
 

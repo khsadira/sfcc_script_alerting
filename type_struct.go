@@ -12,3 +12,13 @@ type Sites struct {
 type Token struct {
 	AccessToken string `json:"access_token"`
 }
+
+
+
+type Data struct {
+	Hits []struct {
+		Data struct {
+			LastModified string `json:"last_modified"`
+		} `json:"data"`
+	} `json:"hits"`
+}

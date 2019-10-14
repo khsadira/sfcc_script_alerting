@@ -6,20 +6,33 @@ import (
 )
 
 func main() {
+	path := "data_x.json"
 	hosts := getHosts()
 	token, _ := getToken("CLIENT_ID_SFCC", "CLIENT_PW_SFCC")
 	for _, host := range hosts {
-		sites, _ := getSitesSfcc(host, token)
-		for _, site := range sites {
-			dataBfr := getLocalInfo("./bfr.json") //UNITEST
-			println(dataBfr, site)
-			/*		data := getSfccInfo(host, site, token) //UNITEST
-					ret, report := compareInfo(dataBfr, data) //UNITEST
-					if ret {
-						alerting(report) //UNITEST
-					}*/
-		} //GLOBAL TEST
-	} //GLOBAL TEST
+		lst, id := getNoneProds(host)
+
+		/*		sites, _ := getSitesSfcc(host, token)
+				for _, site := range sites {
+					/*if site == "fr_ubisoft" {
+						log.Println("Get Datas...")
+						data := getSfccInfo(host, site, token)
+						dataBfr := getFileInfo(path)
+
+						log.Println("Comparing Datas...")
+						report, ret := compareInfo(dataBfr, data)
+
+						if !ret {
+							log.Println("Alerting...")
+							alerting(report)
+							log.Println("Replacing...")
+							replaceFileInfo(path, data)
+						} else {
+							log.Println("No change detected")
+						}
+					}
+				}*/
+	}
 }
 
 func getHosts() []string {
@@ -37,14 +50,4 @@ func getHosts() []string {
 		}
 	}
 	return args
-}
-
-func getLocalInfo(filepath string) string {
-	jsonFile, err := os.Open(filepath)
-	if err != nil {
-		log.Println(err)
-	}
-	defer jsonFile.Close()
-
-	return "salut"
 }
